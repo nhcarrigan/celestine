@@ -1,0 +1,45 @@
+{
+  "extends": "@nhcarrigan",
+  "rules": {
+    "camelcase": [
+      "error",
+      {
+        "allow": [
+          "serverId_userId",
+          "userId_serverId",
+          "pull_request",
+          "issue_number",
+          "issue_comment",
+          "serverId_level_roleId",
+          "serverId_roleId"
+        ]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/server/github/*.ts"],
+      "rules": {
+        "camelcase": [
+          "error",
+          {
+            "allow": ["icon_url"]
+          }
+        ],
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": ["src/modules/subcommands/config/*.ts"],
+      "rules": {
+        "jsdoc/require-param": "off"
+      }
+    },
+    {
+      "files": ["src/modules/data/*.ts"],
+      "rules": {
+        "require-atomic-updates": "off"
+      }
+    }
+  ]
+}

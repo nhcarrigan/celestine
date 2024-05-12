@@ -1,0 +1,47 @@
+{
+  "name": "naomis-moderation-bot",
+  "version": "1.2.0",
+  "description": "A public paid moderation bot for Discord.",
+  "main": "prod/index.js",
+  "scripts": {
+    "audit": "knip",
+    "prebuild": "rm -rf prod && prisma generate",
+    "build": "tsc",
+    "lint": "eslint src --max-warnings 0 && prettier src --check",
+    "start": "node -r dotenv/config prod/index.js",
+    "test": "echo 'no tests yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhcarrigan/mod-bot.git"
+  },
+  "author": "Naomi Carrigan",
+  "bugs": {
+    "url": "https://github.com/nhcarrigan/mod-bot/issues"
+  },
+  "engines": {
+    "node": "20",
+    "pnpm": "8"
+  },
+  "homepage": "https://github.com/nhcarrigan/mod-bot#readme",
+  "devDependencies": {
+    "@nhcarrigan/eslint-config": "3.2.0",
+    "@nhcarrigan/prettier-config": "3.2.0",
+    "@nhcarrigan/typescript-config": "3.0.0",
+    "@types/express": "4.17.21",
+    "eslint": "8.57.0",
+    "knip": "5.15.0",
+    "prettier": "3.2.5",
+    "prisma": "5.13.0",
+    "typescript": "5.4.5"
+  },
+  "dependencies": {
+    "@octokit/rest": "20.1.1",
+    "@prisma/client": "5.13.0",
+    "discord.js": "14.15.2",
+    "dotenv": "16.4.5",
+    "express": "4.19.2",
+    "node-html-to-image": "4.0.0",
+    "winston": "3.13.0"
+  }
+}

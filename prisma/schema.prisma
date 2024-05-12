@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URI")
+}
+
+model cases {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  serverId  String
+  userId    String
+  number    Int
+  action    String
+  reason    String
+  evidence  String[]
+  timestamp String
+  moderator String
+
+  @@unique([serverId, number])
+  @@index([serverId])
+}
+
+model levelRoles {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  serverId String
+  level    Int
+  roleId   String
+
+  @@unique([serverId, level, roleId])
+  @@index([serverId], map: "serverId")
+}
+
+model levels {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  serverId         String
+  userId           String
+  points           Int      @default(0)
+  level            Int      @default(0)
+  username         String
+  avatar           String
+  backgroundColour String   @default("000000")
+  colour           String   @default("ffffff")
+  backgroundImage  String   @default("https://cdn.nhcarrigan.com/banner.png")
+  cooldown         DateTime @default(now())
+
+  @@unique([serverId, userId], map: "serverId_userId")
+}
+
+model configs {
+  id                   String @id @default(auto()) @map("_id") @db.ObjectId
+  serverId             String
+  inviteLink           String @default("")
+  banAppealLink        String @default("")
+  modLogChannel        String @default("")
+  eventLogChannel      String @default("")
+  messageReportChannel String @default("")
+
+  @@unique([serverId], map: "serverId")
+}
+
+model entitlements {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  serverId    String
+  purchaserId String
+  notes       String @default("")
+
+  @@unique([serverId])
+}
+
+model roles {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  serverId String
+  roleId   String
+
+  @@unique([serverId, roleId], map: "serverId_roleId")
+}
