@@ -13,9 +13,17 @@ import { ExtendedClient } from "../interfaces/ExtendedClient";
 export const checkEntitledGuild = async (
   bot: ExtendedClient,
   guild: Guild
-): Promise<boolean> =>
-  Boolean(
-    await bot.db.entitlements
-      .findFirst({ where: { serverId: guild.id } })
-      .catch(() => null)
+): Promise<boolean> => {
+  const isGuildEntitled = await bot.application?.entitlements
+    .fetch({
+      guild,
+      excludeEnded: true
+    })
+    .catch(() => null);
+  const isManuallyEntitled = await bot.db.entitlements
+    .findFirst({ where: { serverId: guild.id } })
+    .catch(() => null);
+  return Boolean(
+    (isGuildEntitled && isGuildEntitled.size) || isManuallyEntitled
   );
+};
