@@ -1,4 +1,5 @@
 import { ExtendedClient } from "../interfaces/ExtendedClient";
+import { checkEntitledGuild } from "../utils/checkEntitledGuild";
 import { errorHandler } from "../utils/errorHandler";
 
 /**
@@ -12,6 +13,16 @@ export const maintainSecurity = async (bot: ExtendedClient) => {
     const records = await bot.db.security.findMany();
     const date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
     for (const record of records) {
+      const guild =
+        bot.guilds.cache.get(record.serverId) ||
+        (await bot.guilds.fetch(record.serverId).catch(() => null));
+      if (!guild) {
+        continue;
+      }
+      const isEntitled = await checkEntitledGuild(bot, guild);
+      if (!isEntitled) {
+        continue;
+      }
       await fetch(
         `https://discord.com/api/v10/guilds/${record.serverId}/incident-actions`,
         {

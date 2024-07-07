@@ -1,4 +1,5 @@
 import { ExtendedClient } from "../interfaces/ExtendedClient";
+import { checkEntitledGuild } from "../utils/checkEntitledGuild";
 import { errorHandler } from "../utils/errorHandler";
 
 /**
@@ -13,11 +14,19 @@ export const postBirthdays = async (bot: ExtendedClient) => {
     const configs = await bot.db.configs.findMany();
     const withChannel = configs.filter((c) => c.birthdayChannel);
     for (const record of withChannel) {
-      const guild = bot.guilds.cache.get(record.serverId);
+      const guild =
+        bot.guilds.cache.get(record.serverId) ||
+        (await bot.guilds.fetch(record.serverId).catch(() => null));
       if (!guild) {
         continue;
       }
-      const channel = guild.channels.cache.get(record.birthdayChannel);
+      const isEntitled = await checkEntitledGuild(bot, guild);
+      if (!isEntitled) {
+        continue;
+      }
+      const channel =
+        guild.channels.cache.get(record.birthdayChannel) ||
+        (await bot.guilds.fetch(record.birthdayChannel).catch(() => null));
       if (!channel || !("send" in channel)) {
         continue;
       }

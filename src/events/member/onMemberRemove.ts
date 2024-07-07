@@ -25,6 +25,11 @@ export const onMemberRemove = async (
         serverId_userId: { serverId: guild.id, userId: user.id }
       }
     });
+    await bot.db.levels.delete({
+      where: {
+        serverId_userId: { serverId: guild.id, userId: user.id }
+      }
+    });
 
     if (!config.eventLogChannel) {
       return;

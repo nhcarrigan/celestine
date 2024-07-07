@@ -1,6 +1,7 @@
 import { Guild } from "discord.js";
 
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
+import { errorHandler } from "../../utils/errorHandler";
 /**
  *
  * @param {ExtendedClient} bot The bot's Discord instance.
@@ -10,7 +11,18 @@ export const onGuildDelete = async function (
   bot: ExtendedClient,
   guild: Guild
 ) {
-  await bot.env.debugHook.send({
-    content: `LEFT GUILD: ${guild.name} (${guild.id}) `
-  });
+  try {
+    await bot.env.debugHook.send({
+      content: `LEFT GUILD: ${guild.name} (${guild.id}) `
+    });
+    await bot.db.cases.deleteMany({ where: { serverId: guild.id } });
+    await bot.db.levelRoles.deleteMany({ where: { serverId: guild.id } });
+    await bot.db.levels.deleteMany({ where: { serverId: guild.id } });
+    await bot.db.configs.deleteMany({ where: { serverId: guild.id } });
+    await bot.db.roles.deleteMany({ where: { serverId: guild.id } });
+    await bot.db.birthdays.deleteMany({ where: { serverId: guild.id } });
+    await bot.db.security.deleteMany({ where: { serverId: guild.id } });
+  } catch (err) {
+    await errorHandler(bot, "on guild delete", err);
+  }
 };
