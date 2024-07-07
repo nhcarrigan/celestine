@@ -15,13 +15,27 @@ export const onGuildDelete = async function (
     await bot.env.debugHook.send({
       content: `LEFT GUILD: ${guild.name} (${guild.id}) `
     });
-    await bot.db.cases.deleteMany({ where: { serverId: guild.id } });
-    await bot.db.levelRoles.deleteMany({ where: { serverId: guild.id } });
-    await bot.db.levels.deleteMany({ where: { serverId: guild.id } });
-    await bot.db.configs.deleteMany({ where: { serverId: guild.id } });
-    await bot.db.roles.deleteMany({ where: { serverId: guild.id } });
-    await bot.db.birthdays.deleteMany({ where: { serverId: guild.id } });
-    await bot.db.security.deleteMany({ where: { serverId: guild.id } });
+    await bot.db.cases
+      .deleteMany({ where: { serverId: guild.id } })
+      .catch(() => null);
+    await bot.db.levelRoles
+      .deleteMany({ where: { serverId: guild.id } })
+      .catch(() => null);
+    await bot.db.levels
+      .deleteMany({ where: { serverId: guild.id } })
+      .catch(() => null);
+    await bot.db.configs
+      .deleteMany({ where: { serverId: guild.id } })
+      .catch(() => null);
+    await bot.db.roles
+      .deleteMany({ where: { serverId: guild.id } })
+      .catch(() => null);
+    await bot.db.birthdays
+      .deleteMany({ where: { serverId: guild.id } })
+      .catch(() => null);
+    await bot.db.security
+      .deleteMany({ where: { serverId: guild.id } })
+      .catch(() => null);
   } catch (err) {
     await errorHandler(bot, "on guild delete", err);
   }

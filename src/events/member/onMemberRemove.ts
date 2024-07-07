@@ -20,16 +20,20 @@ export const onMemberRemove = async (
 
     const config = await getConfig(bot, guild.id);
 
-    await bot.db.birthdays.delete({
-      where: {
-        serverId_userId: { serverId: guild.id, userId: user.id }
-      }
-    });
-    await bot.db.levels.delete({
-      where: {
-        serverId_userId: { serverId: guild.id, userId: user.id }
-      }
-    });
+    await bot.db.birthdays
+      .delete({
+        where: {
+          serverId_userId: { serverId: guild.id, userId: user.id }
+        }
+      })
+      .catch(() => null);
+    await bot.db.levels
+      .delete({
+        where: {
+          serverId_userId: { serverId: guild.id, userId: user.id }
+        }
+      })
+      .catch(() => null);
 
     if (!config.eventLogChannel) {
       return;
