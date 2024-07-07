@@ -6,5 +6,7 @@ export const defaultConfig: Omit<configs, "id"> = {
   banAppealLink: "",
   modLogChannel: "",
   eventLogChannel: "",
-  messageReportChannel: ""
+  messageReportChannel: "",
+  birthdayChannel: "",
+  joinRole: ""
 };
