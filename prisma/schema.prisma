@@ -90,3 +90,12 @@ model birthdays {
 
   @@unique([serverId, userId], map: "serverId_userId")
 }
+
+model security {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  serverId    String
+  lockDms     Boolean @default(false)
+  lockInvites Boolean @default(false)
+
+  @@unique([serverId], map: "serverId")
+}

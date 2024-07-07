@@ -11,7 +11,9 @@
           "issue_number",
           "issue_comment",
           "serverId_level_roleId",
-          "serverId_roleId"
+          "serverId_roleId",
+          "invites_disabled_until",
+          "dms_disabled_until"
         ]
       }
     ]
