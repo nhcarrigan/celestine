@@ -59,6 +59,7 @@ model configs {
   modLogChannel        String @default("")
   eventLogChannel      String @default("")
   messageReportChannel String @default("")
+  joinRole             String @default("")
 
   @@unique([serverId], map: "serverId")
 }

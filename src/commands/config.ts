@@ -8,13 +8,24 @@ import {
 
 import { logChannelChoices } from "../config/LogChannelChoices";
 import { Command } from "../interfaces/Command";
+import { CommandHandler } from "../interfaces/CommandHandler";
 import { getConfig } from "../modules/data/getConfig";
 import { handleAppealLink } from "../modules/subcommands/config/handleAppealLink";
 import { handleInviteLink } from "../modules/subcommands/config/handleInviteLink";
+import { handleJoinRole } from "../modules/subcommands/config/handleJoinRole";
 import { handleList } from "../modules/subcommands/config/handleList";
 import { handleLogging } from "../modules/subcommands/config/handleLogging";
 import { handleRole } from "../modules/subcommands/config/handleRole";
 import { errorHandler } from "../utils/errorHandler";
+
+const handlers: { [key: string]: CommandHandler } = {
+  list: handleList,
+  "invite-link": handleInviteLink,
+  "appeal-link": handleAppealLink,
+  logging: handleLogging,
+  role: handleRole,
+  "join-role": handleJoinRole
+};
 
 export const config: Command = {
   data: new SlashCommandBuilder()
@@ -79,6 +90,17 @@ export const config: Command = {
             .setDescription("The role to toggle.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("join-role")
+        .setDescription("Configure a role to be assigned when a member joins.")
+        .addRoleOption((o) =>
+          o
+            .setName("role")
+            .setDescription("The role to assign.")
+            .setRequired(true)
+        )
     ),
   run: async (bot, interaction) => {
     try {
@@ -105,27 +127,15 @@ export const config: Command = {
 
       const subcommand = interaction.options.getSubcommand();
 
-      switch (subcommand) {
-        case "list":
-          await handleList(bot, interaction, config);
-          break;
-        case "logging":
-          await handleLogging(bot, interaction, config);
-          break;
-        case "invite-link":
-          await handleInviteLink(bot, interaction, config);
-          break;
-        case "appeal-link":
-          await handleAppealLink(bot, interaction, config);
-          break;
-        case "roles":
-          await handleRole(bot, interaction, config);
-          break;
-        default:
-          await interaction.editReply({
-            content: "This is an invalid subcommand. Please contact Naomi."
-          });
+      const handler = handlers[subcommand];
+
+      if (handler) {
+        await handler(bot, interaction, config);
+        return;
       }
+      await interaction.editReply({
+        content: "This is an invalid subcommand. Please contact Naomi."
+      });
     } catch (err) {
       const id = await errorHandler(bot, "config command", err);
       await interaction.editReply({

@@ -17,6 +17,10 @@ export const onMemberAdd = async (bot: ExtendedClient, member: GuildMember) => {
 
     const config = await getConfig(bot, guild.id);
 
+    if (config.joinRole) {
+      await member.roles.add(config.joinRole).catch(() => null);
+    }
+
     if (!config.eventLogChannel) {
       return;
     }
