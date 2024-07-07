@@ -32,9 +32,9 @@ const validateDate = (month: string, day: number): boolean => {
   }
 };
 
-export const bbset: Command = {
+export const birthday: Command = {
   data: new SlashCommandBuilder()
-    .setName("bbset")
+    .setName("birthday")
     .setDescription("Set your birthday!")
     .addStringOption((option) =>
       option
