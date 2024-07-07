@@ -11,6 +11,7 @@ import { Command } from "../interfaces/Command";
 import { CommandHandler } from "../interfaces/CommandHandler";
 import { getConfig } from "../modules/data/getConfig";
 import { handleAppealLink } from "../modules/subcommands/config/handleAppealLink";
+import { handleBirthdayChannel } from "../modules/subcommands/config/handleBirthdayChannel";
 import { handleInviteLink } from "../modules/subcommands/config/handleInviteLink";
 import { handleJoinRole } from "../modules/subcommands/config/handleJoinRole";
 import { handleList } from "../modules/subcommands/config/handleList";
@@ -24,7 +25,8 @@ const handlers: { [key: string]: CommandHandler } = {
   "appeal-link": handleAppealLink,
   logging: handleLogging,
   role: handleRole,
-  "join-role": handleJoinRole
+  "join-role": handleJoinRole,
+  "birthday-channel": handleBirthdayChannel
 };
 
 export const config: Command = {
@@ -99,6 +101,19 @@ export const config: Command = {
           o
             .setName("role")
             .setDescription("The role to assign.")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("birthday-channel")
+        .setDescription(
+          "Configure a channel where members can be wished a happy birthday."
+        )
+        .addChannelOption((o) =>
+          o
+            .setName("channel")
+            .setDescription("The channel to send birthday messages in.")
             .setRequired(true)
         )
     ),

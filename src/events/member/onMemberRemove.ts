@@ -20,6 +20,12 @@ export const onMemberRemove = async (
 
     const config = await getConfig(bot, guild.id);
 
+    await bot.db.birthdays.delete({
+      where: {
+        serverId_userId: { serverId: guild.id, userId: user.id }
+      }
+    });
+
     if (!config.eventLogChannel) {
       return;
     }

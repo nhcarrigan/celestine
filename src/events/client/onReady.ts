@@ -1,4 +1,7 @@
+import { scheduleJob } from "node-schedule";
+
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
+import { postBirthdays } from "../../modules/postBirthdays";
 import { registerCommands } from "../../utils/registerCommands";
 import { sendDebugMessage } from "../../utils/sendDebugMessage";
 
@@ -10,4 +13,7 @@ import { sendDebugMessage } from "../../utils/sendDebugMessage";
 export const onReady = async (bot: ExtendedClient) => {
   await sendDebugMessage(bot, `Logged in as ${bot.user?.tag}`);
   await registerCommands(bot);
+
+  // Daily at 9am PST
+  scheduleJob("birthdays", "0 9 * * *", async () => await postBirthdays(bot));
 };

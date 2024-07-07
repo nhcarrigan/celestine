@@ -60,6 +60,7 @@ model configs {
   eventLogChannel      String @default("")
   messageReportChannel String @default("")
   joinRole             String @default("")
+  birthdayChannel      String @default("")
 
   @@unique([serverId], map: "serverId")
 }
@@ -79,4 +80,13 @@ model roles {
   roleId   String
 
   @@unique([serverId, roleId], map: "serverId_roleId")
+}
+
+model birthdays {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  serverId String
+  userId   String
+  birthday DateTime
+
+  @@unique([serverId, userId], map: "serverId_userId")
 }
