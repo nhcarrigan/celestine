@@ -41,6 +41,9 @@ export const postBirthdays = async (bot: ExtendedClient) => {
       const isBirthdayToday = hasBirthdaySet.filter(
         (r) => r.birthday === todayIn2000
       );
+      if (!isBirthdayToday.length) {
+        return;
+      }
       const names = isBirthdayToday.map((r) => `<@${r.userId}>`).join(", ");
       await channel.send(`Happy birthday to these lovely people~!\n${names}`);
     }
