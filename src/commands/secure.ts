@@ -24,6 +24,7 @@ export const secure: Command = {
     ),
   run: async (bot, interaction) => {
     try {
+      await interaction.deferReply({ ephemeral: true });
       const { guild, member } = interaction;
       const lockInvites = interaction.options.getBoolean("invites", true);
       const lockDms = interaction.options.getBoolean("dms", true);
