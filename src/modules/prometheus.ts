@@ -16,7 +16,7 @@ export class Prometheus {
       help: "The number of guilds the bot is in."
     });
     this.entitled = new Gauge({
-      name: "guilds",
+      name: "entitled",
       help: "The number of guilds the bot is in."
     });
     this.updateGuilds(bot);
