@@ -35,6 +35,7 @@ export const onInteraction = async (
       );
       return;
     }
+    bot.analytics.commandUsed();
     if (interaction.isChatInputCommand()) {
       handleChatInputCommand(bot, interaction);
     }
