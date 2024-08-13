@@ -8,6 +8,7 @@ export class Prometheus {
   private entitled: Gauge;
   private commands: Counter;
   private users: Gauge;
+  private errors: Counter;
 
   constructor(bot: ExtendedClient) {
     this.guilds = new Gauge({
@@ -28,6 +29,10 @@ export class Prometheus {
       help: "The number of users the bot knows."
     });
     this.users.set(bot.users.cache.size);
+    this.errors = new Counter({
+      name: "errors",
+      help: "The number of errors handled by the process."
+    });
     this.client.collectDefaultMetrics();
   }
 
@@ -48,5 +53,9 @@ export class Prometheus {
       async (g) => await checkEntitledGuild(bot, g)
     );
     this.entitled.set(entitled.size);
+  }
+
+  public errorHandled() {
+    this.errors.inc();
   }
 }
