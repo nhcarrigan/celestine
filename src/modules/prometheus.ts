@@ -1,21 +1,33 @@
 import client, { Counter, Gauge } from "prom-client";
-import type { ExtendedClient } from "../interfaces/ExtendedClient.js";
+import type { ExtendedClient } from "../interfaces/ExtendedClient";
+import { checkEntitledGuild } from "../utils/checkEntitledGuild";
 
 export class Prometheus {
   private client = client;
   private guilds: Gauge;
+  private entitled: Gauge;
   private commands: Counter;
+  private users: Gauge;
 
   constructor(bot: ExtendedClient) {
     this.guilds = new Gauge({
       name: "guilds",
       help: "The number of guilds the bot is in."
     });
-    this.guilds.set(bot.guilds.cache.size);
+    this.entitled = new Gauge({
+      name: "guilds",
+      help: "The number of guilds the bot is in."
+    });
+    this.updateGuilds(bot);
     this.commands = new Counter({
       name: "commands",
       help: "The number of commands that have been used since last boot."
     });
+    this.users = new Gauge({
+      name: "users",
+      help: "The number of users the bot knows."
+    });
+    this.users.set(bot.users.cache.size);
     this.client.collectDefaultMetrics();
   }
 
@@ -25,5 +37,16 @@ export class Prometheus {
 
   public updateGuilds(bot: ExtendedClient) {
     this.guilds.set(bot.guilds.cache.size);
+  }
+
+  public updateUsers(bot: ExtendedClient) {
+    this.users.set(bot.users.cache.size);
+  }
+
+  public async updateEntitlements(bot: ExtendedClient) {
+    const entitled = bot.guilds.cache.filter(
+      async (g) => await checkEntitledGuild(bot, g)
+    );
+    this.entitled.set(entitled.size);
   }
 }

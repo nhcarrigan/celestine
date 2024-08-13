@@ -37,6 +37,7 @@ export const onGuildDelete = async function (
       .deleteMany({ where: { serverId: guild.id } })
       .catch(() => null);
     bot.analytics.updateGuilds(bot);
+    await bot.analytics.updateEntitlements(bot);
   } catch (err) {
     await errorHandler(bot, "on guild delete", err);
   }
