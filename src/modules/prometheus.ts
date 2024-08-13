@@ -28,7 +28,12 @@ export class Prometheus {
       name: "users",
       help: "The number of users the bot knows."
     });
-    this.users.set(bot.users.cache.size);
+    this.users.set(
+      bot.guilds.cache.reduce(
+        (members, guild) => members + guild.memberCount,
+        0
+      )
+    );
     this.errors = new Counter({
       name: "errors",
       help: "The number of errors handled by the process."
@@ -45,7 +50,12 @@ export class Prometheus {
   }
 
   public updateUsers(bot: ExtendedClient) {
-    this.users.set(bot.users.cache.size);
+    this.users.set(
+      bot.guilds.cache.reduce(
+        (members, guild) => members + guild.memberCount,
+        0
+      )
+    );
   }
 
   public async updateEntitlements(bot: ExtendedClient) {
