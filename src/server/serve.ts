@@ -146,6 +146,22 @@ export const serve = async (bot: ExtendedClient) => {
         }).render("#tree-nation-offset-website");
       </script>
     </footer>
+      <video
+    autoplay="true"
+    loop="true"
+    muted="true"
+    playsinline="true"
+    src="https://cdn.nhcarrigan.com/overlay.webm"
+    style="pointer-events: none; position: fixed; top: 0; left: 0; opacity: 0.25;">
+  </video>
+  <script
+      async="true"
+      defer="true"
+      id="hs-script-loader"
+      src="//js.hs-scripts.com/47086586.js"
+      type="text/javascript">
+  </script>
+  <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="5398ce41-4ceb-4e31-9049-4c784a70179a";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
   </body>
 </html>      
 `);
