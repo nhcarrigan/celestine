@@ -15,6 +15,4 @@ export const onGuildCreate = async function (
   await bot.env.debugHook.send({
     content: `JOINED GUILD: ${guild.name} (${guild.id}) - owned by ${owner?.displayName} (${owner.id})`
   });
-  bot.analytics.updateGuilds(bot);
-  await bot.analytics.updateEntitlements(bot);
 };

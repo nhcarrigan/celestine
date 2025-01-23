@@ -54,7 +54,6 @@ export const onMemberRemove = async (
     await channel.send({
       content: `${user.tag} (${user.id}) has left the server (joined at ${joinStamp}). Total Members: ${guild.memberCount}`
     });
-    bot.analytics.updateUsers(bot);
   } catch (err) {
     await errorHandler(bot, "on member remove", err);
   }

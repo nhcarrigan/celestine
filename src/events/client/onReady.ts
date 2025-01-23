@@ -3,7 +3,6 @@ import { scheduleJob } from "node-schedule";
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { maintainSecurity } from "../../modules/maintainSecurity";
 import { postBirthdays } from "../../modules/postBirthdays";
-import { Prometheus } from "../../modules/prometheus";
 import { registerCommands } from "../../utils/registerCommands";
 import { sendDebugMessage } from "../../utils/sendDebugMessage";
 
@@ -15,8 +14,6 @@ import { sendDebugMessage } from "../../utils/sendDebugMessage";
 export const onReady = async (bot: ExtendedClient) => {
   await sendDebugMessage(bot, `Logged in as ${bot.user?.tag}`);
   await registerCommands(bot);
-  bot.analytics = new Prometheus(bot);
-  await bot.analytics.updateEntitlements(bot);
 
   // Daily at 9am PST
   scheduleJob("birthdays", "0 9 * * *", async () => await postBirthdays(bot));

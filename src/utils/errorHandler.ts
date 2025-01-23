@@ -37,6 +37,5 @@ export const errorHandler = async (
       username: bot.user?.username ?? "Mod bot"
     });
   }
-  bot.analytics.errorHandled();
   return id;
 };
