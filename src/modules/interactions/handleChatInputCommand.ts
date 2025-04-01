@@ -35,9 +35,15 @@ export const handleChatInputCommand = async (
     }
     if (
       (!interaction.member || !isModerator(interaction.member)) &&
-      !["leaderboard", "rank", "profile", "role", "help", "ping"].includes(
-        interaction.commandName
-      )
+      ![
+        "leaderboard",
+        "rank",
+        "profile",
+        "role",
+        "help",
+        "ping",
+        "birthday"
+      ].includes(interaction.commandName)
     ) {
       await interaction.reply({
         content: "You must be a moderator to use bot commands.",
