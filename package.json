@@ -1,5 +1,5 @@
 {
-  "name": "naomis-moderation-bot",
+  "name": "celestine",
   "version": "1.3.0",
   "description": "A public paid moderation bot for Discord.",
   "main": "prod/index.js",

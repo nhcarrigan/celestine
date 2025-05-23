@@ -32,7 +32,7 @@ export const help: Command = {
       );
 
       const embed = new EmbedBuilder();
-      embed.setTitle("Naomi's Moderation Bot");
+      embed.setTitle("Celestine");
       embed.setDescription(
         "This is a highly focused moderation bot designed to deliver the best experience when it comes to keeping your community safe and welcoming. To ensure we are able to deliver the features our users require, this bot is only available through a $5/month subscription."
       );

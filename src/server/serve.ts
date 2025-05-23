@@ -49,7 +49,7 @@ export const serve = async (bot: ExtendedClient) => {
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Naomi's Mod Bot</title>
+    <title>Celestine</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A paid moderation bot for Discord." />
@@ -57,7 +57,8 @@ export const serve = async (bot: ExtendedClient) => {
   </head>
   <body>
     <main>
-    <h1>Naomi's Mod Bot</h1>
+    <h1>Celestine</h1>
+     <img src="https://cdn.nhcarrigan.com/new-avatars/celestine-full.png" width="250" alt="Celestine" />
     <section>
       <p>A paid moderation bot for Discord.</p>
     </section>
