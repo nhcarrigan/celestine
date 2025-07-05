@@ -1,6 +1,4 @@
-import { readFile } from "fs/promises";
 import http from "http";
-import https from "https";
 
 import express from "express";
 import { register } from "prom-client";
@@ -80,37 +78,4 @@ export const serve = async (bot: ExtendedClient) => {
         "https://cdn.nhcarrigan.com/avatars/nhcarrigan.png"
     });
   });
-
-  if (process.env.NODE_ENV === "production") {
-    const privateKey = await readFile(
-      "/etc/letsencrypt/live/hooks.nhcarrigan.com/privkey.pem",
-      "utf8"
-    );
-    const certificate = await readFile(
-      "/etc/letsencrypt/live/hooks.nhcarrigan.com/cert.pem",
-      "utf8"
-    );
-    const ca = await readFile(
-      "/etc/letsencrypt/live/hooks.nhcarrigan.com/chain.pem",
-      "utf8"
-    );
-
-    const credentials = {
-      key: privateKey,
-      cert: certificate,
-      ca: ca
-    };
-
-    const httpsServer = https.createServer(credentials, app);
-
-    httpsServer.listen(9443, async () => {
-      await bot.env.debugHook.send({
-        content: "https server listening on port 9443",
-        username: bot.user?.username ?? "bot",
-        avatarURL:
-          bot.user?.displayAvatarURL() ??
-          "https://cdn.nhcarrigan.com/avatars/nhcarrigan.png"
-      });
-    });
-  }
 };
