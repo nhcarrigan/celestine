@@ -18,7 +18,7 @@ import { loadContexts } from "./utils/loadContexts";
 
   await connectDatabase(bot);
   handleEvents(bot);
-  serve(bot);
+  serve();
 
   await bot.login(bot.env.token);
 })();

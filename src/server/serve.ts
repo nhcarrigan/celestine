@@ -3,14 +3,13 @@ import http from "http";
 import express from "express";
 import { register } from "prom-client";
 
-import { ExtendedClient } from "../interfaces/ExtendedClient";
+import { logHandler } from "../utils/logHandler";
 
 /**
  * Instantiates the web server for GitHub webhooks.
  *
- * @param {ExtendedClient} bot The bot's Discord instance.
  */
-export const serve = async (bot: ExtendedClient) => {
+export const serve = () => {
   const app = express();
 
   app.get("/", (_req, res) => {
@@ -70,12 +69,6 @@ export const serve = async (bot: ExtendedClient) => {
   const httpServer = http.createServer(app);
 
   httpServer.listen(9080, async () => {
-    await bot.env.debugHook.send({
-      content: "http server listening on port 9080",
-      username: bot.user?.username ?? "bot",
-      avatarURL:
-        bot.user?.displayAvatarURL() ??
-        "https://cdn.nhcarrigan.com/avatars/nhcarrigan.png"
-    });
+    await logHandler.log("info", "HTTP server listening on port 9080");
   });
 };

@@ -7,7 +7,4 @@ import { Logger } from "@nhcarrigan/logger";
  * @param {string} level - The log level to use.
  * @param {string} message - The message to log.
  */
-export const logHandler = new Logger(
-  "Celestine",
-  process.env.LOG_TOKEN ?? ""
-)
+export const logHandler = new Logger("Celestine", process.env.LOG_TOKEN ?? "");

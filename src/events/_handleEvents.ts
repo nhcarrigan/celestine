@@ -26,7 +26,7 @@ import { onVoiceUpdate } from "./voice/onVoiceUpdate";
 export const handleEvents = (bot: ExtendedClient) => {
   /* Client Events */
   bot.on("ready", async () => await onReady(bot));
-  bot.on("disconnect", () => onDisconnect(bot));
+  bot.on("disconnect", () => onDisconnect());
 
   /* Message Events */
   bot.on("messageCreate", async (message) => {

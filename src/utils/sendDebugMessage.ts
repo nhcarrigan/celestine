@@ -1,22 +1,16 @@
 import { ExtendedClient } from "../interfaces/ExtendedClient";
 
+import { logHandler } from "./logHandler";
+
 /**
  * Sends a log message to the worker log hook.
  *
- * @param {ExtendedClient} bot The bot's Discord instance.
+ * @param {ExtendedClient} _bot The bot's Discord instance.
  * @param {string} message The message to send.
  */
 export const sendDebugMessage = async (
-  bot: ExtendedClient,
+  _bot: ExtendedClient,
   message: string
 ) => {
-  if (bot.env.debugHook) {
-    await bot.env.debugHook.send({
-      content: message,
-      avatarURL:
-        bot.user?.displayAvatarURL() ??
-        "https://cdn.nhcarrigan.com/avatars/nhcarrigan.png",
-      username: bot.user?.username ?? "Mod bot"
-    });
-  }
+  await logHandler.log("debug", message);
 };

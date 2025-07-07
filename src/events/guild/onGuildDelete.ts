@@ -2,6 +2,7 @@ import { Guild } from "discord.js";
 
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { errorHandler } from "../../utils/errorHandler";
+import { logHandler } from "../../utils/logHandler";
 /**
  *
  * @param {ExtendedClient} bot The bot's Discord instance.
@@ -12,9 +13,10 @@ export const onGuildDelete = async function (
   guild: Guild
 ) {
   try {
-    await bot.env.debugHook.send({
-      content: `LEFT GUILD: ${guild.name} (${guild.id}) `
-    });
+    await logHandler.log(
+      "info",
+      `Left guild: ${guild.name} (${guild.id}) - owned by ${guild.ownerId}`
+    );
     await bot.db.cases
       .deleteMany({ where: { serverId: guild.id } })
       .catch(() => null);
