@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@nhcarrigan/logger':
+        specifier: 1.0.0
+        version: 1.0.0
       '@octokit/rest':
         specifier: 20.1.1
         version: 20.1.1
@@ -166,6 +169,9 @@ packages:
     engines: {node: '20', pnpm: '8'}
     peerDependencies:
       eslint: '>=8'
+
+  '@nhcarrigan/logger@1.0.0':
+    resolution: {integrity: sha512-2e19Bie+ZKb6yKPKjhawqsENkhHatYkvBAmFZx9eToOXdOca+CYi51tldRMtejg6e0+4hOOf2bo5zdBQKmH0dw==}
 
   '@nhcarrigan/prettier-config@3.2.0':
     resolution: {integrity: sha512-AZOzwDTZfRiEinjUmqRj4gqZLYpLANhN1iMIsESxeuln+/BjGI06pINQsePIZ/I2HoPd+HGjNqu0S+Os9nHzuw==}
@@ -2397,6 +2403,8 @@ snapshots:
       - prettier
       - supports-color
       - typescript
+
+  '@nhcarrigan/logger@1.0.0': {}
 
   '@nhcarrigan/prettier-config@3.2.0(prettier@3.2.5)':
     dependencies:

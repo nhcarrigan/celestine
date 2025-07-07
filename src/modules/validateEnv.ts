@@ -14,7 +14,7 @@ export const validateEnv = (): ExtendedClient["env"] => {
     !process.env.DEBUG_HOOK ||
     !process.env.MONGO_URI
   ) {
-    logHandler.log("error", "MIssing environment variables!");
+    logHandler.log("warn", "Missing environment variables!");
     process.exit(1);
   }
 
