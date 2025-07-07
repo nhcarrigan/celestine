@@ -41,6 +41,15 @@ export const handleEvents = (bot: ExtendedClient) => {
     }
     await onMessageDelete(bot, message);
   });
+  bot.on("messageDeleteBulk", async (messages) => {
+    const guild = messages.first()?.guild;
+    if (!guild || !(await checkEntitledGuild(bot, guild))) {
+      return;
+    }
+    for (const message of messages.values()) {
+      await onMessageDelete(bot, message);
+    }
+  });
   bot.on("messageUpdate", async (oldMessage, newMessage) => {
     if (
       !newMessage.guild ||
