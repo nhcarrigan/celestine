@@ -37,6 +37,7 @@
     "@nhcarrigan/logger": "1.0.0",
     "@octokit/rest": "20.1.1",
     "@prisma/client": "5.13.0",
+    "diff": "8.0.2",
     "discord.js": "14.15.2",
     "dotenv": "16.4.5",
     "express": "4.19.2",

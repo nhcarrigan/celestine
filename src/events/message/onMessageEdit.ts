@@ -4,6 +4,7 @@ import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { getConfig } from "../../modules/data/getConfig";
 import { customSubstring } from "../../utils/customSubstring";
 import { errorHandler } from "../../utils/errorHandler";
+import { generateDiff } from "../../modules/events/generateDiff";
 
 /**
  * Handles a message edit event.
@@ -46,16 +47,15 @@ export const onMessageEdit = async (
       return;
     }
 
+      const diffContent
+      = (oldMessage.content ?? newMessage.content) === null
+        ? "This message appears to have no content."
+        : generateDiff(oldMessage.content ?? "", newMessage.content ?? "");
+
     await logChannel.send({
       content: `${author?.tag} (${author?.id}) edited their message in in <#${
         channel.id
-      }>:\n\n**Old Content:**\n\`${customSubstring(
-        oldMessage.content,
-        1750
-      )}\`\n\n**New content:**\n\`${customSubstring(
-        newMessage.content,
-        1750
-      )}\`\n\n${newMessage.url}`,
+      }>:\`\`\`diff\n${customSubstring(diffContent, 4000)}\n\`\`\``,
       allowedMentions: { parse: [] }
     });
   } catch (err) {
