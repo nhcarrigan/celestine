@@ -9,6 +9,7 @@ import { handleMassBanModal } from "../../modules/modals/handleMassBanModal";
 import { handleMessageReportModal } from "../../modules/modals/handleMessageReportModal";
 import { checkEntitledGuild } from "../../utils/checkEntitledGuild";
 import { errorHandler } from "../../utils/errorHandler";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Handles interactions.
@@ -60,6 +61,7 @@ export const onInteraction = async (
         await handleMessageReportModal(bot, interaction);
       }
     }
+    await logHandler.metric("interaction_create", 1, { userId: interaction.user.id, guildId: interaction.guild.id, command: interaction.isCommand() ? interaction.commandName : interaction.customId });
   } catch (err) {
     const id = await errorHandler(bot, "on interaction", err);
     if (!interaction.isAutocomplete()) {

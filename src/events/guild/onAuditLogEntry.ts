@@ -5,6 +5,7 @@ import { getModActionFromAuditLog } from "../../modules/events/getModActionFromA
 import { addCase } from "../../utils/addCase";
 import { errorHandler } from "../../utils/errorHandler";
 import { sendLogMessage } from "../../utils/sendLogMessage";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Handles properly logging a manual mod action based on audit logs.
@@ -72,6 +73,7 @@ export const onAuditLogEntry = async (
       false,
       caseNum
     );
+    await logHandler.metric("audit_log_action", 1, { modAction, guildId: guild.id, targetId: target.id });
   } catch (err) {
     await errorHandler(bot, "on audit log entry", err);
   }

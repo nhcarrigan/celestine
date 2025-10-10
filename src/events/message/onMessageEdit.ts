@@ -5,6 +5,7 @@ import { getConfig } from "../../modules/data/getConfig";
 import { customSubstring } from "../../utils/customSubstring";
 import { errorHandler } from "../../utils/errorHandler";
 import { generateDiff } from "../../modules/events/generateDiff";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Handles a message edit event.
@@ -58,6 +59,7 @@ export const onMessageEdit = async (
       }>:\`\`\`diff\n${customSubstring(diffContent, 4000)}\n\`\`\``,
       allowedMentions: { parse: [] }
     });
+    await logHandler.metric("message_edit", 1, { userId: author?.id ?? "unknown", guildId: guild.id });
   } catch (err) {
     await errorHandler(bot, "on message edit", err);
   }

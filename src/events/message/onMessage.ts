@@ -9,6 +9,7 @@ import { errorHandler } from "../../utils/errorHandler";
 import { sendLogMessage } from "../../utils/sendLogMessage";
 import { sendModDm } from "../../utils/sendModDm";
 import { triggerModRequest } from "../../utils/triggerModRequest";
+import { logHandler } from "../../utils/logHandler.js";
 
 const linkRegex = /https?:\/\/([a-zA-Z0-9_.-]{2,256}\.\w{2,24}\b)/g;
 
@@ -67,6 +68,7 @@ export const onMessage = async (bot: ExtendedClient, message: Message) => {
             duration: calculateMuteDuration(24, "hours"),
             pruneDays: 0
           });
+          await logHandler.metric("automod_trigger", 1, { userId: author.id, guildId: guild.id });
           return;
         }
       }
@@ -135,6 +137,7 @@ export const onMessage = async (bot: ExtendedClient, message: Message) => {
     for (const record of levelRoles) {
       await member.roles.add(record.roleId).catch(() => null);
     }
+    await logHandler.metric("message_create", 1, { userId: author.id, guildId: guild.id });
   } catch (err) {
     await errorHandler(bot, "on message", err);
   }

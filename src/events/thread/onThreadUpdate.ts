@@ -3,6 +3,7 @@ import { ThreadChannel } from "discord.js";
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { getConfig } from "../../modules/data/getConfig";
 import { errorHandler } from "../../utils/errorHandler";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Handles a thread update.
@@ -48,6 +49,7 @@ export const onThreadUpdate = async (
         content: `${oldThread.name} has been renamed to ${newThread.name} in <#${newThread.parentId}>`
       });
     }
+    await logHandler.metric("thread_update", 1, { userId: newThread.ownerId ?? "unknown", guildId: newThread.guild.id });
   } catch (err) {
     await errorHandler(bot, "on thread update", err);
   }

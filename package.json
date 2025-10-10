@@ -34,7 +34,8 @@
     "typescript": "5.4.5"
   },
   "dependencies": {
-    "@nhcarrigan/logger": "1.0.0",
+    "@nhcarrigan/discord-analytics": "0.0.6",
+    "@nhcarrigan/logger": "1.1.1",
     "@octokit/rest": "20.1.1",
     "@prisma/client": "5.13.0",
     "diff": "8.0.2",

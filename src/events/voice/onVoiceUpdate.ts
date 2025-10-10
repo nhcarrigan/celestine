@@ -3,6 +3,7 @@ import { VoiceState } from "discord.js";
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { getConfig } from "../../modules/data/getConfig";
 import { errorHandler } from "../../utils/errorHandler";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Handles voice state updates.
@@ -76,6 +77,7 @@ export const onVoiceUpdate = async (
         content: `${newVoice.member.user.tag} (${newVoice.member.id}) has been deafened.`
       });
     }
+    await logHandler.metric("voice_update", 1, { userId: newVoice.member?.id ?? "unknown", guildId: newVoice.guild.id });
   } catch (err) {
     await errorHandler(bot, "on voice update", err);
   }

@@ -3,6 +3,7 @@ import { GuildMember, PartialGuildMember } from "discord.js";
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { getConfig } from "../../modules/data/getConfig";
 import { errorHandler } from "../../utils/errorHandler";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Sends a log message to the configured log channel when a member's
@@ -74,6 +75,7 @@ export const onMemberUpdate = async (
         )}`
       });
     }
+    await logHandler.metric("member_update", 1, { userId: user.id, guildId: guild.id });
   } catch (err) {
     await errorHandler(bot, "on member update", err);
   }

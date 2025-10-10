@@ -3,6 +3,7 @@ import { ThreadChannel } from "discord.js";
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { getConfig } from "../../modules/data/getConfig";
 import { errorHandler } from "../../utils/errorHandler";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Handles the creation of a new thread.
@@ -36,6 +37,7 @@ export const onThreadCreate = async (
     await channel.send({
       content: `${thread.name} has been created in <#${thread.parentId}>`
     });
+    await logHandler.metric("thread_create", 1, { userId: thread.ownerId ?? "unknown", guildId: thread.guild.id });
   } catch (err) {
     await errorHandler(bot, "on thread create", err);
   }

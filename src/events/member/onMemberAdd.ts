@@ -3,6 +3,7 @@ import { GuildMember } from "discord.js";
 import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { getConfig } from "../../modules/data/getConfig";
 import { errorHandler } from "../../utils/errorHandler";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Sends a log message to the configured log channel when a member
@@ -36,6 +37,7 @@ export const onMemberAdd = async (bot: ExtendedClient, member: GuildMember) => {
     await channel.send({
       content: `${user.tag} (${user.id}) has joined the server. Total Members: ${guild.memberCount}`
     });
+    await logHandler.metric("member_join", 1, { userId: user.id, guildId: guild.id });
   } catch (err) {
     await errorHandler(bot, "on member add", err);
   }

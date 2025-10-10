@@ -1,3 +1,4 @@
+import { DiscordAnalytics } from "@nhcarrigan/discord-analytics";
 import { ExtendedClient } from "../interfaces/ExtendedClient";
 import { checkEntitledGuild } from "../utils/checkEntitledGuild";
 
@@ -17,6 +18,7 @@ import { onThreadCreate } from "./thread/onThreadCreate";
 import { onThreadDelete } from "./thread/onThreadDelete";
 import { onThreadUpdate } from "./thread/onThreadUpdate";
 import { onVoiceUpdate } from "./voice/onVoiceUpdate";
+import { logHandler } from "../utils/logHandler.js";
 
 /**
  * Module to mount the Discord event listeners.
@@ -24,8 +26,13 @@ import { onVoiceUpdate } from "./voice/onVoiceUpdate";
  * @param {ExtendedClient} bot The bot's Discord instance.
  */
 export const handleEvents = (bot: ExtendedClient) => {
+  const analytics = new DiscordAnalytics(bot, logHandler);
+
   /* Client Events */
-  bot.on("ready", async () => await onReady(bot));
+  bot.once("ready", async () => {
+    await onReady(bot);
+    analytics.startCron();
+  });
   bot.on("disconnect", () => onDisconnect());
 
   /* Message Events */

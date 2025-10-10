@@ -8,9 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@nhcarrigan/discord-analytics':
+        specifier: 0.0.6
+        version: 0.0.6(@nhcarrigan/logger@1.1.1)(discord.js@14.15.2)
       '@nhcarrigan/logger':
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.1.1
+        version: 1.1.1
       '@octokit/rest':
         specifier: 20.1.1
         version: 20.1.1
@@ -167,14 +170,20 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
 
+  '@nhcarrigan/discord-analytics@0.0.6':
+    resolution: {integrity: sha512-Mci/zSY2nE24BM2cZx5EiYqwpRTTCBznFfs2BphejzDAaWPt1P12V5ln7OSUbFLGhvTD/Qwi0za3yPv6shQLoA==}
+    peerDependencies:
+      '@nhcarrigan/logger': '>=1.1.0-hotfix'
+      discord.js: ^14.0.0
+
   '@nhcarrigan/eslint-config@3.2.0':
     resolution: {integrity: sha512-DlB0T5o0BcRlqJ9ktejs+jtufrxwyWnzWXsCM8GrWMph+19dCBOf8w3aDQpuIu9hM16d79mDTvSwwDx5ekOVvw==}
     engines: {node: '20', pnpm: '8'}
     peerDependencies:
       eslint: '>=8'
 
-  '@nhcarrigan/logger@1.0.0':
-    resolution: {integrity: sha512-2e19Bie+ZKb6yKPKjhawqsENkhHatYkvBAmFZx9eToOXdOca+CYi51tldRMtejg6e0+4hOOf2bo5zdBQKmH0dw==}
+  '@nhcarrigan/logger@1.1.1':
+    resolution: {integrity: sha512-P6OEQFHDtf6psybYGljuCxkSW6DLQCsx1aZZ3w4YKBXHBFjDbhuvpM9K1kPhVN48hakitx2WPLEoIFr6YZELYw==}
 
   '@nhcarrigan/prettier-config@3.2.0':
     resolution: {integrity: sha512-AZOzwDTZfRiEinjUmqRj4gqZLYpLANhN1iMIsESxeuln+/BjGI06pINQsePIZ/I2HoPd+HGjNqu0S+Os9nHzuw==}
@@ -2393,6 +2402,12 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
+  '@nhcarrigan/discord-analytics@0.0.6(@nhcarrigan/logger@1.1.1)(discord.js@14.15.2)':
+    dependencies:
+      '@nhcarrigan/logger': 1.1.1
+      discord.js: 14.15.2
+      node-schedule: 2.1.1
+
   '@nhcarrigan/eslint-config@3.2.0(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.5)':
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -2411,7 +2426,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@nhcarrigan/logger@1.0.0': {}
+  '@nhcarrigan/logger@1.1.1': {}
 
   '@nhcarrigan/prettier-config@3.2.0(prettier@3.2.5)':
     dependencies:

@@ -5,6 +5,7 @@ import { ExtendedClient } from "../../interfaces/ExtendedClient";
 import { getConfig } from "../../modules/data/getConfig";
 import { customSubstring } from "../../utils/customSubstring";
 import { errorHandler } from "../../utils/errorHandler";
+import { logHandler } from "../../utils/logHandler.js";
 
 /**
  * Handles a message delete event.
@@ -67,6 +68,7 @@ export const onMessageDelete = async (
         parse: []
       }
     });
+    await logHandler.metric("message_delete", 1, { userId: author?.id ?? "unknown", guildId: guild.id });
   } catch (err) {
     await errorHandler(bot, "on message delete", err);
   }
