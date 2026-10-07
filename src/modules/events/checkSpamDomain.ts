@@ -22,23 +22,7 @@ export const checkSpamDomain = async (
       body: JSON.stringify({ domain })
     });
     const walshyRes = (await walshyReq.json()) as { badDomain: boolean };
-    if (walshyRes.badDomain) {
-      return true;
-    }
-    const yachtsReq = await fetch(
-      `https://phish.sinking.yachts/v2/check/${encodeURI(domain)}`,
-      {
-        headers: {
-          accept: "application/json",
-          "X-Identity": "Naomi's mod bot - built by naomi_lgbt"
-        }
-      }
-    );
-    const yachtsRes = (await yachtsReq.json()) as boolean;
-    if (yachtsRes) {
-      return true;
-    }
-    return false;
+    return walshyRes.badDomain === true;
   } catch (err) {
     await errorHandler(bot, "load spam domains", err);
     return false;
